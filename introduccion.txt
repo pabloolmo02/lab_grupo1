@@ -1,1 +1,3 @@
-Este es el archivo de introducción.
+Proyecto e Introduccion
+Este repositorio tiene flujo colaborativo
+Incluye todos los issues,ramas PRs, revisiones y release

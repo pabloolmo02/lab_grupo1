@@ -1,3 +1,5 @@
-
 zkljxfhsk
 ampliamos el contenido de introuccion...
+Proyecto e Introduccion
+Este repositorio tiene flujo colaborativo
+Incluye todos los issues,ramas PRs, revisiones y release

@@ -1,3 +1,5 @@
 Este es el manual del usuario.
+Se añadió la sección de preguntas frecuentes (FAQ).
 esta es la segunda linea
 y esta la tercera
+

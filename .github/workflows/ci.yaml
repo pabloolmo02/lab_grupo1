@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [ main ]
+
+jobs:
+  txt-not-empty:
+    name: Verificar .txt no vacíos
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (historial completo para diffs)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Validar archivos .txt
+        run: |
+          set -euo pipefail
+
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            echo "Chequeando SOLO los .txt cambiados en este PR…"
+            mapfile -t files < <(git diff --name-only --diff-filter=ACMRT ${{ github.event.pull_request.base.sha }} ${{ github.sha }} | grep -E '\.txt$' || true)
+          else
+            echo "Chequeando TODOS los .txt del repo (push a main)…"
+            mapfile -t files < <(git ls-files '*.txt' || true)
+          fi
+
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "No hay .txt que validar."
+            exit 0
+          fi
+
+          echo "Archivos a validar:" "${files[@]}"
+          empty=0
+          for f in "${files[@]}"; do
+            if [ ! -s "$f" ]; then
+              echo "::error file=$f::El archivo está vacío"
+              empty=1
+            fi
+          done
+
+          if [ $empty -ne 0 ]; then
+            echo "Se encontraron archivos .txt vacíos."
+            exit 1
+          fi
+
+          echo "Todos los .txt tienen contenido."
+

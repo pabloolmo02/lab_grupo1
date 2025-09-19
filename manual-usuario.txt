@@ -1,1 +1,3 @@
 Este es el manual del usuario.
+esta es la segunda linea
+y esta la tercera
